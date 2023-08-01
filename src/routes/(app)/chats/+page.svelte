@@ -15,7 +15,8 @@
 
 	$: tripsQuery = query(
 		collection(firestore, 'trips'),
-		where(!isTourist ? 'localId' : 'touristId', '==', $user?.uid || '')
+		where(!isTourist ? 'localId' : 'touristId', '==', $user?.uid || ''),
+		where('status', '==', 'accepted')
 	);
 </script>
 

@@ -2,10 +2,9 @@
 	import { ArrowBigLeft } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import { avatarUrl } from '$lib/utils';
-	import { Doc, docStore, userStore } from 'sveltefire';
-	import { onMount } from 'svelte';
+	import { Doc, userStore } from 'sveltefire';
 	import { auth, firestore } from '$lib/firebase';
-	import { doc, getDoc, setDoc } from 'firebase/firestore';
+	import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 	import { goto } from '$app/navigation';
 
 	export let data: PageData;
@@ -29,16 +28,18 @@
 		const localUser = await getDoc(doc(firestore, 'users', data.userId));
 		const touristUser = await getDoc(doc(firestore, 'users', $user.uid));
 
-		await setDoc(doc(firestore, 'trips', data.userId), {
+		await addDoc(collection(firestore, 'trips'), {
 			localName: localUser.data()?.name,
 			touristName: touristUser.data()?.name,
+			touristDescription: touristUser.data()?.description,
 			localId: data.userId,
 			touristId: $user.uid,
 			active: true,
+			status: 'pending',
 			createdAt: new Date().toISOString()
 		});
 		state = 'exist';
-		goto(`/chats/${data.userId}`);
+		goto(`/chats`);
 	}
 </script>
 

@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import { MessageCircle, Search, User2 } from 'lucide-svelte';
+	import { ListTodo, MessageCircle, Search, User2 } from 'lucide-svelte';
 	import { Doc, User } from 'sveltefire';
 </script>
 
@@ -19,6 +19,19 @@
 							<a href="/">
 								<Search
 									class={cn(
+										!$page.route.id?.includes('profile') &&
+											!$page.route.id?.includes('chats') &&
+											'text-primary'
+									)}
+								/>
+							</a>
+						</li>
+					{:else}
+						<li>
+							<a href="/">
+								<ListTodo
+									class={cn(
+										'w-6 h-6',
 										!$page.route.id?.includes('profile') &&
 											!$page.route.id?.includes('chats') &&
 											'text-primary'

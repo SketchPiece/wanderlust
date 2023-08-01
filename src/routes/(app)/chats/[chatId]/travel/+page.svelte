@@ -20,7 +20,7 @@
 </script>
 
 <Doc ref={`trips/${data.chatId}`} let:data={tripInfo}>
-	<Doc ref={`users/${data.chatId}`} let:data={buddyInfo}>
+	<Doc ref={`users/${tripInfo.localId}`} let:data={buddyInfo}>
 		<div class="flex items-center p-2">
 			<a href={`/chats/${data.chatId}`}>
 				<ArrowBigLeft class="w-10 h-10" />
